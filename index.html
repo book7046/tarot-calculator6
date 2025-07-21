@@ -96,11 +96,9 @@
             <div class="flex border-b mb-6">
                 <button class="tab active px-6 py-3 font-medium text-lg" data-tab="calculator">靈數計算</button>
                 <button class="tab px-6 py-3 font-medium text-lg" data-tab="lifepath">生命軌跡</button>
-                
-<button class="tab px-6 py-3 font-medium text-lg" data-tab="monthlyflow">今年流月流日</button>
-
-<button class="tab px-6 py-3 font-medium text-lg" data-tab="editor">內容編輯</button>
-            </div>
+                <button class="tab px-6 py-3 font-medium text-lg" data-tab="editor">內容編輯</button>
+            
+                <button class="tab px-6 py-3 font-medium text-lg" data-tab="yearFlow">今年流月 / 流日</button></div>
             
             <!-- 靈數計算頁面 -->
             <div id="calculator" class="tab-content active">
@@ -314,38 +312,7 @@
                 </div>
             </div>
             
-            
-<!-- 今年流月流日頁面 -->
-<div id="monthlyflow" class="tab-content">
-    <h2 class="text-xl font-semibold mb-4 text-indigo-700">今年流月流日</h2>
-
-    <!-- 流月顯示區 -->
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6" id="monthlyFlowGrid">
-        <!-- 動態產生每月流月 -->
-    </div>
-
-    <!-- 當月每日流日詳情 -->
-    <div id="dailyFlowTableContainer" class="bg-white border border-gray-200 rounded-lg p-4 hidden"><div id="dailyFlowGrid" class="grid grid-cols-1 md:grid-cols-7 gap-2">
-        <h3 id="selectedMonthTitle" class="text-lg font-semibold text-purple-700 mb-2"></h3>
-        <div class="overflow-x-auto">
-            <table class="w-full text-sm text-left text-gray-700">
-                <thead class="bg-gray-100">
-                    <tr>
-                        <th class="py-2 px-4 border">日期</th>
-                        <th class="py-2 px-4 border">國曆流日</th>
-                        <th class="py-2 px-4 border">農曆</th>
-                        <th class="py-2 px-4 border">農曆流日</th>
-                    </tr>
-                </thead>
-                <tbody id="dailyFlowTableBody">
-                    <!-- 動態產生每日 -->
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
-
-<!-- 內容編輯頁面 -->
+            <!-- 內容編輯頁面 -->
             <div id="editor" class="tab-content">
                 <h2 class="text-xl font-semibold mb-4 text-indigo-700">內容編輯</h2>
                 
@@ -1224,161 +1191,8 @@
             if (res > 21) res -= 22;
             return res;
         }
-    
-// ========== 今年流月流日模組 ==========
-function generateMonthlyFlowOverview(solarYear, solarMonth, solarDay, lunarMonth, lunarDay) {
-    const grid = document.getElementById("monthlyFlowGrid");
-    if (!grid) return;
-    grid.innerHTML = "";
-    const today = new Date();
-    const year = today.getFullYear();
-    for (let month = 1; month <= 12; month++) {
-        const solarMonthly = calculateFinalSum(solarYear + solarMonth + solarDay + year + month);
-        const lunarMonthly = calculateFinalSum(solarYear + lunarMonth + lunarDay + year + month);
-        const div = document.createElement("div");
-        div.className = "p-4 bg-indigo-50 hover:bg-indigo-100 rounded-lg shadow cursor-pointer";
-        div.innerHTML = `
-            <div class="text-xl font-bold text-indigo-700 mb-1">${month} 月</div>
-            <div class="text-sm text-gray-600">國曆流月：<span class="font-bold numerology-value" data-type="yearly">${solarMonthly}</span> - ${getTarotCard(solarMonthly)}</div>
-            <div class="text-sm text-gray-600">農曆流月：<span class="font-bold numerology-value" data-type="yearly">${lunarMonthly}</span> - ${getTarotCard(lunarMonthly)}</div>
-        `;
-        div.addEventListener("click", () => showDailyFlowTable(year, month, solarYear, solarMonth, solarDay, lunarMonth, lunarDay));
-        grid.appendChild(div);
-    }
-}
-
-
-function showDailyFlowTable(year, month, solarYear, solarMonth, solarDay, lunarMonth, lunarDay) {
-    const container = document.getElementById("dailyFlowTableContainer");
-    const title = document.getElementById("selectedMonthTitle");
-    const grid = document.getElementById("dailyFlowGrid");
-
-    container.classList.remove("hidden");
-    title.textContent = `每日流日詳情：${year} 年 ${month} 月`;
-    grid.innerHTML = "";
-
-    const daysInMonth = new Date(year, month, 0).getDate();
-
-    for (let day = 1; day <= daysInMonth; day++) {
-        const solarDateRaw = solarYear + solarMonth + solarDay + year + month + day;
-        const lunarDateRaw = solarYear + lunarMonth + lunarDay + year + month + day;
-        const solarDayNum = calculateFinalSum(solarDateRaw);
-        const lunarDayNum = calculateFinalSum(lunarDateRaw);
-
-        const div = document.createElement("div");
-        div.className = "bg-indigo-50 text-center p-2 rounded shadow-sm text-sm";
-        div.innerHTML = `
-            <div class="text-gray-600 font-medium">${month}/${day}</div>
-            <div class="text-indigo-800 font-bold">${solarDayNum}</div>
-            <div class="text-purple-800 font-bold">${lunarDayNum}</div>
-        `;
-        grid.appendChild(div);
-    }
-}
- 年 ${month} 月`;
-    tableBody.innerHTML = "";
-
-    const daysInMonth = new Date(year, month, 0).getDate();
-    for (let day = 1; day <= daysInMonth; day++) {
-        const solarDateRaw = solarYear + solarMonth + solarDay + year + month + day;
-        const lunarDateRaw = solarYear + lunarMonth + lunarDay + year + month + day;
-        const solarDayNum = calculateFinalSum(solarDateRaw);
-        const lunarDayNum = calculateFinalSum(lunarDateRaw);
-        const solar = Solar.fromYmd(year, month, day);
-        const lunar = solar.getLunar();
-
-        const tr = document.createElement("tr");
-        tr.innerHTML = `
-            <td class="border px-4 py-2">${year}/${month}/${day}</td>
-            <td class="border px-4 py-2"><span class="numerology-value font-bold" data-type="yearly">${solarDayNum}</span> - ${getTarotCard(solarDayNum)}</td>
-            <td class="border px-4 py-2">${lunar.toFullString()}</td>
-            <td class="border px-4 py-2"><span class="numerology-value font-bold" data-type="yearly">${lunarDayNum}</span> - ${getTarotCard(lunarDayNum)}</td>
-        `;
-        tableBody.appendChild(tr);
-    }
-}
-
-// 包在計算之後
-const _origCalc = calculateNumerology;
-calculateNumerology = function(...args){
-    _origCalc.apply(this,args);
-    const rocYear = parseInt(document.getElementById("rocYear").value);
-    const solarMonth = parseInt(document.getElementById("solarMonth").value);
-    const solarDay = parseInt(document.getElementById("solarDay").value);
-    const lunarYear = parseInt(document.getElementById("lunarYear").value);
-    const lunarMonth = parseInt(document.getElementById("lunarMonth").value);
-    const lunarDay = parseInt(document.getElementById("lunarDay").value);
-    const solarYear = rocYear + 1911;
-    generateMonthlyFlowOverview(solarYear, solarMonth, solarDay, lunarMonth, lunarDay);
-};
-
-</script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9611d1758759f238',t:'MTc1Mjg0MDAyMS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();
-// ========== 今年流月流日模組 ==========
-function generateMonthlyFlowOverview(solarYear, solarMonth, solarDay, lunarMonth, lunarDay) {
-    const grid = document.getElementById("monthlyFlowGrid");
-    if (!grid) return;
-    grid.innerHTML = "";
-    const today = new Date();
-    const year = today.getFullYear();
-    for (let month = 1; month <= 12; month++) {
-        const solarMonthly = calculateFinalSum(solarYear + solarMonth + solarDay + year + month);
-        const lunarMonthly = calculateFinalSum(solarYear + lunarMonth + lunarDay + year + month);
-        const div = document.createElement("div");
-        div.className = "p-4 bg-indigo-50 hover:bg-indigo-100 rounded-lg shadow cursor-pointer";
-        div.innerHTML = `
-            <div class="text-xl font-bold text-indigo-700 mb-1">${month} 月</div>
-            <div class="text-sm text-gray-600">國曆流月：<span class="font-bold numerology-value" data-type="yearly">${solarMonthly}</span> - ${getTarotCard(solarMonthly)}</div>
-            <div class="text-sm text-gray-600">農曆流月：<span class="font-bold numerology-value" data-type="yearly">${lunarMonthly}</span> - ${getTarotCard(lunarMonthly)}</div>
-        `;
-        div.addEventListener("click", () => showDailyFlowTable(year, month, solarYear, solarMonth, solarDay, lunarMonth, lunarDay));
-        grid.appendChild(div);
-    }
-}
-
-function showDailyFlowTable(year, month, solarYear, solarMonth, solarDay, lunarMonth, lunarDay) {
-    const container = document.getElementById("dailyFlowTableContainer");
-    const tableBody = document.getElementById("dailyFlowTableBody");
-    const title = document.getElementById("selectedMonthTitle");
-    container.classList.remove("hidden");
-    title.textContent = `每日流日詳情：${year} 年 ${month} 月`;
-    tableBody.innerHTML = "";
-
-    const daysInMonth = new Date(year, month, 0).getDate();
-    for (let day = 1; day <= daysInMonth; day++) {
-        const solarDateRaw = solarYear + solarMonth + solarDay + year + month + day;
-        const lunarDateRaw = solarYear + lunarMonth + lunarDay + year + month + day;
-        const solarDayNum = calculateFinalSum(solarDateRaw);
-        const lunarDayNum = calculateFinalSum(lunarDateRaw);
-        const solar = Solar.fromYmd(year, month, day);
-        const lunar = solar.getLunar();
-
-        const tr = document.createElement("tr");
-        tr.innerHTML = `
-            <td class="border px-4 py-2">${year}/${month}/${day}</td>
-            <td class="border px-4 py-2"><span class="numerology-value font-bold" data-type="yearly">${solarDayNum}</span> - ${getTarotCard(solarDayNum)}</td>
-            <td class="border px-4 py-2">${lunar.toFullString()}</td>
-            <td class="border px-4 py-2"><span class="numerology-value font-bold" data-type="yearly">${lunarDayNum}</span> - ${getTarotCard(lunarDayNum)}</td>
-        `;
-        tableBody.appendChild(tr);
-    }
-}
-
-// 包在計算之後
-const _origCalc = calculateNumerology;
-calculateNumerology = function(...args){
-    _origCalc.apply(this,args);
-    const rocYear = parseInt(document.getElementById("rocYear").value);
-    const solarMonth = parseInt(document.getElementById("solarMonth").value);
-    const solarDay = parseInt(document.getElementById("solarDay").value);
-    const lunarYear = parseInt(document.getElementById("lunarYear").value);
-    const lunarMonth = parseInt(document.getElementById("lunarMonth").value);
-    const lunarDay = parseInt(document.getElementById("lunarDay").value);
-    const solarYear = rocYear + 1911;
-    generateMonthlyFlowOverview(solarYear, solarMonth, solarDay, lunarMonth, lunarDay);
-};
-
-</script>
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9611d1758759f238',t:'MTc1Mjg0MDAyMS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
 <script>
 // 生命軌跡色帶與高亮
 function styleLifePathTable(){
@@ -1414,5 +1228,128 @@ if (typeof generateLifepathTable === 'function'){
 }
 </script>
 
+
+<script>
+// ========= 新增：今年流月 / 流日 =========
+
+// 顏色與樣式
+const flowRowColors = ['bg-red-50','bg-green-50','bg-yellow-50'];
+const highlightCls  = 'text-red-600 font-extrabold underline';
+const solarCls      = 'text-blue-700';
+const lunarCls      = 'text-emerald-700';
+const fmtVal = (num, cls='') => `<span class="${[7,13,16].includes(num)?highlightCls:cls}">${num}</span>`;
+
+// 產生 12 個月流月方塊
+function genYearGrid(year, solarBase, lunarBase){
+    const grid = document.getElementById('yearFlowGrid');
+    if(!grid) return;
+    grid.innerHTML = '';
+    for(let m=1; m<=12; m++){
+        const s = calculateFinalSum(solarBase + year + m);
+        const l = calculateFinalSum(lunarBase + year + m);
+        grid.insertAdjacentHTML('beforeend', `
+            <div data-month="${m}" class="rounded-lg p-3 cursor-pointer hover:ring-2 hover:ring-indigo-400 ${flowRowColors[Math.floor((m-1)/4)]}">
+              <div class="font-semibold mb-1">${m} 月</div>
+              <div>${fmtVal(s, solarCls)} <span class="text-gray-500 ml-1">國</span></div>
+              <div>${fmtVal(l, lunarCls)} <span class="text-gray-500 ml-1">農</span></div>
+            </div>`);
+    }
+}
+
+// 產生流日日曆
+function genDayCalendar(year, month, solarBase, lunarBase){
+    const wrap = document.getElementById('monthFlowCalendar');
+    if(!wrap) return;
+    const daysInMonth = new Date(year, month, 0).getDate();
+    const firstWeekday = new Date(year, month-1, 1).getDay();
+    let html = '<table class="w-full text-xs border-collapse select-none"><thead><tr class="text-gray-600 bg-gray-50"><th class="py-1">日</th><th>一</th><th>二</th><th>三</th><th>四</th><th>五</th><th>六</th></tr></thead><tbody>';
+    let d = 1;
+    for(let r=0; r<6 && d<=daysInMonth; r++){
+        html += '<tr>';
+        for(let c=0; c<7; c++){
+            if(r===0 && c<firstWeekday || d>daysInMonth){
+                html += '<td class="py-1 px-1"></td>';
+            }else{
+                const s = calculateFinalSum(solarBase + year + month + d);
+                const l = calculateFinalSum(lunarBase + year + month + d);
+                html += `<td class="p-1 align-top"><div class="text-gray-700">${d}</div><div>${fmtVal(s, solarCls)}</div><div>${fmtVal(l, lunarCls)}</div></td>`;
+                d++;
+            }
+        }
+        html += '</tr>';
+    }
+    html += '</tbody></table>';
+    wrap.innerHTML = html;
+    wrap.classList.remove('hidden');
+}
+
+// 保存基準值
+let FLOW_BASE = { solar:null, lunar:null, year: new Date().getFullYear() };
+
+// 包裝原 calculateNumerology, 每次計算後刷新流月
+if(typeof calculateNumerology === 'function'){
+    const _oldCalc = calculateNumerology;
+    calculateNumerology = function(){
+        _oldCalc.apply(this, arguments);
+        updateFlowBase();
+    };
+}
+
+// 從輸入欄取得基準值
+function updateFlowBase(){
+    const ry = +document.getElementById('rocYear')?.value;
+    const sm = +document.getElementById('solarMonth')?.value;
+    const sd = +document.getElementById('solarDay')?.value;
+    const ly = +document.getElementById('lunarYear')?.value;
+    const lm = +document.getElementById('lunarMonth')?.value;
+    const ld = +document.getElementById('lunarDay')?.value;
+    if([ry,sm,sd,ly,lm,ld].some(isNaN)) return;
+
+    FLOW_BASE.solar = (ry + 1911) + sm + sd;
+    FLOW_BASE.lunar = ly + lm + ld;
+    genYearGrid(FLOW_BASE.year, FLOW_BASE.solar, FLOW_BASE.lunar);
+    document.getElementById('monthFlowCalendar')?.classList.add('hidden');
+}
+
+// 點月方塊顯示流日日曆
+document.addEventListener('click', e=>{
+    const box = e.target.closest('[data-month]');
+    if(!box || FLOW_BASE.solar===null) return;
+    genDayCalendar(FLOW_BASE.year, +box.dataset.month, FLOW_BASE.solar, FLOW_BASE.lunar);
+});
+
+// 補：Tab 切換邏輯（與原有相容）
+document.addEventListener('DOMContentLoaded', () => {
+    const tabs = document.querySelectorAll('.tab');
+    tabs.forEach(tab=>{
+        tab.addEventListener('click', ()=>{
+            const target = tab.dataset.tab || tab.getAttribute('data-target');
+            if(!target) return;
+            tabs.forEach(t=>t.classList.remove('active'));
+            tab.classList.add('active');
+
+            document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(c=>c.style.display='none');
+            const tgtEl = document.getElementById(target);
+            if(tgtEl){
+                tgtEl.classList.add('active');
+                tgtEl.style.display='block';
+            }
+            if(target==='yearFlow' && FLOW_BASE.solar!==null){
+                genYearGrid(FLOW_BASE.year, FLOW_BASE.solar, FLOW_BASE.lunar);
+            }
+        });
+    });
+});
+</script>
+
+    <!-- 今年流月 / 流日頁面 -->
+    <div id="yearFlow" class="tab-content">
+        <div class="bg-indigo-50 p-6 rounded-lg">
+            <h2 class="text-xl font-semibold mb-4 text-indigo-700">今年流月 ➜ 點選看流日</h2>
+            <div id="yearFlowGrid" class="grid grid-cols-2 md:grid-cols-4 gap-3 text-center text-sm mb-6"></div>
+            <div id="monthFlowCalendar" class="hidden"></div>
+        </div>
+    </div>
 </body>
 </html>
