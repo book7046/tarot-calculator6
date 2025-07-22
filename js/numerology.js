@@ -20,6 +20,20 @@ const yearlyThemeData = structuredClone(yearlyThemeDataRaw);
         
         // 初始化頁面
         document.addEventListener('DOMContentLoaded', function() {
+
+// === iOS PWA input fix ===
+window.addEventListener('touchstart', function() {}, {passive: true});
+setTimeout(() => {
+  const dummyInput = document.createElement('input');
+  dummyInput.style.position = 'absolute';
+  dummyInput.style.opacity = 0;
+  dummyInput.style.pointerEvents = 'none';
+  document.body.appendChild(dummyInput);
+  dummyInput.focus();
+  setTimeout(() => document.body.removeChild(dummyInput), 100);
+}, 500);
+// =========================
+
             // 匯出匯入按鈕事件
             document.getElementById('exportContentBtn').addEventListener('click', exportContent);
             document.getElementById('importContentBtn').addEventListener('click', () => document.getElementById('importFileInput').click());
