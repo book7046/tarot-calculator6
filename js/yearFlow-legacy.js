@@ -1,4 +1,6 @@
 
+document.addEventListener('DOMContentLoaded', function() {
+  
         // 塔羅牌名稱
         const tarotCards = [
             "愚人", "魔法師", "女祭司", "女皇", "國王", "教宗", 
@@ -945,4 +947,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
+});
+
 });
