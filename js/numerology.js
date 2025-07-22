@@ -26,7 +26,7 @@ const yearlyThemeData = structuredClone(yearlyThemeDataRaw);
             document.getElementById('importFileInput').addEventListener('change', importContent);
 
             // 禁止右鍵功能
-            document.addEventListener('contextmenu', function(e){ e.preventDefault(); });
+            // document.addEventListener('contextmenu', function(e){ e.preventDefault(); }); // disabled to avoid PWA keyboard issue
 
             document.getElementById('convertBtn').addEventListener('click', convertSolarToLunar);
 
