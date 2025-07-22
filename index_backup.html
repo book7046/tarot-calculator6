@@ -24,9 +24,8 @@
             <div class="flex border-b mb-6">
                 <button class="tab active px-6 py-3 font-medium text-lg" data-tab="calculator">靈數計算</button>
                 <button class="tab px-6 py-3 font-medium text-lg" data-tab="lifepath">生命軌跡</button>
-                <button class="tab px-6 py-3 font-medium text-lg" data-tab="yearFlow">今年流月 / 流日</button>
                 <button class="tab px-6 py-3 font-medium text-lg" data-tab="editor">內容編輯</button>
-            </div>   
+            </div>
             
             <!-- 靈數計算頁面 -->
             <div id="calculator" class="tab-content active">
@@ -313,12 +312,5 @@ if('serviceWorker'in navigator){
  window.addEventListener('load',()=>{navigator.serviceWorker.register('./sw.js').catch(err=>console.error('SW registration failed:',err));});
 }
 </script>
-<div class="tab-content" id="yearFlow">
-<div class="bg-indigo-50 p-6 rounded-lg">
-<h2 class="text-xl font-semibold mb-4 text-indigo-700">今年流月 ➜ 點選看流日</h2>
-<div class="grid grid-cols-2 md:grid-cols-4 gap-3 text-center text-sm mb-6" id="yearFlowGrid"></div>
-<div class="hidden" id="monthFlowCalendar"></div>
-</div>
-<script src="js/yearFlow.js"></script>
 </body>
 </html>
