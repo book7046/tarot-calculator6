@@ -320,5 +320,20 @@ if('serviceWorker'in navigator){
 <div class="hidden" id="monthFlowCalendar"></div>
 </div>
 <script src="js/yearFlow.js"></script>
+
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function() {
+      navigator.serviceWorker.register('./sw.js')
+        .then(function(registration) {
+          console.log('✅ ServiceWorker 註冊成功，範圍為:', registration.scope);
+        })
+        .catch(function(error) {
+          console.log('❌ ServiceWorker 註冊失敗:', error);
+        });
+    });
+  }
+</script>
+
 </body>
 </html>
