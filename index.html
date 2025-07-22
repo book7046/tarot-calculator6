@@ -307,7 +307,7 @@
 
 
 
-    <script src="./js/numerology-legacy.js"></script>
+    <script type="module" src="./js/numerology.js"></script>
 <script>
 if('serviceWorker'in navigator){
  window.addEventListener('load',()=>{navigator.serviceWorker.register('./sw.js').catch(err=>console.error('SW registration failed:',err));});
@@ -320,19 +320,5 @@ if('serviceWorker'in navigator){
 <div class="hidden" id="monthFlowCalendar"></div>
 </div>
 <script src="js/yearFlow.js"></script>
-
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    // 強制觸發一次用戶互動 (iOS PWA 鍵盤初始化修復)
-    const input = document.createElement('input');
-    input.style.position = 'absolute';
-    input.style.opacity = 0;
-    input.style.pointerEvents = 'none';
-    document.body.appendChild(input);
-    input.focus();
-    setTimeout(() => document.body.removeChild(input), 100);
-  });
-</script>
-
 </body>
 </html>
