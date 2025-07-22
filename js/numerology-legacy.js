@@ -44,6 +44,10 @@ document.addEventListener('DOMContentLoaded', function() {
   ]).then(([numData, themeData]) => {
     numerologyData = numData;
     yearlyThemeData = themeData;
+    // expose functions to global scope
+    window.convertSolarToLunar = convertSolarToLunar;
+    window.exportContent = exportContent;
+    window.importContent = importContent;
     initNumerology();
   });
 });
