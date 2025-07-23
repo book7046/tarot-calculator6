@@ -341,7 +341,7 @@ const yearlyThemeData = structuredClone(yearlyThemeDataRaw);
             
             // 計算農曆靈數
             const lunarEssence = calculateEssence(lunarYear);
-            const lunarExternalRaw = lunarYear + lunarMonth + lunarDay;
+            const lunarExternalRaw = lunarYear + Math.abs(lunarMonth) + lunarDay;
             const lunarExternal = calculateSum(lunarExternalRaw);
             const lunarInternal = lunarExternal > 21 ? calculateSum(lunarExternal) : lunarExternal;
             
@@ -374,7 +374,7 @@ const yearlyThemeData = structuredClone(yearlyThemeDataRaw);
             const solarYearly = calculateFinalSum(solarYearlyRaw);
             
             // 計算農曆流年
-            const lunarYearlyRaw = yearToUse + lunarMonth + lunarDay;
+            const lunarYearlyRaw = yearToUse + Math.abs(lunarMonth) + lunarDay;
             const lunarYearly = calculateFinalSum(lunarYearlyRaw);
             
             // 顯示今年流年
@@ -386,7 +386,7 @@ const yearlyThemeData = structuredClone(yearlyThemeDataRaw);
             // ===== 計算本月流月 =====
             const currentMonth = currentDate.getMonth() + 1;
             const baseSolarRaw = solarYear + solarMonth + solarDay;
-            const baseLunarRaw = lunarYear + lunarMonth + lunarDay;
+            const baseLunarRaw = lunarYear + Math.abs(lunarMonth) + lunarDay;
             const solarMonthlyRaw = baseSolarRaw + currentYear + currentMonth;
             const lunarMonthlyRaw = baseLunarRaw + currentYear + currentMonth;
             const solarMonthly = calculateFinalSum(solarMonthlyRaw);
@@ -696,4 +696,4 @@ if (typeof generateLifepathTable === 'function'){
         styleLifePathTable();
     };
 } else {
-    // fallback call on DOMContentLo
+    //
