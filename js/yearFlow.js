@@ -309,6 +309,7 @@
                     document.getElementById('lunarYear').value = lunar.getYear();
                     document.getElementById('lunarMonth').value = Math.abs(lunar.getMonth());
                     document.getElementById('lunarDay').value = lunar.getDay();
+                    updateLunarDateInfo();
                     console.log("轉換結果：", lunar.toString());
 
                     updateLunarDateInfo();

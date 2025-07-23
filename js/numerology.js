@@ -131,7 +131,7 @@ const yearlyThemeData = structuredClone(yearlyThemeDataRaw);
         // 更新農曆日期資訊
         function updateLunarDateInfo() {
             const year = parseInt(document.getElementById('lunarYear').value);
-            const month = Math.abs(parseInt(document.getElementById('lunarMonth').value));
+            const month = Math.abs(Math.abs(parseInt(document.getElementById('lunarMonth').value)));
             document.getElementById('lunarMonth').value = month;
             const day = parseInt(document.getElementById('lunarDay').value);
             
@@ -158,6 +158,7 @@ const yearlyThemeData = structuredClone(yearlyThemeDataRaw);
                     document.getElementById('lunarYear').value = lunar.getYear();
                     document.getElementById('lunarMonth').value = Math.abs(lunar.getMonth());
                     document.getElementById('lunarDay').value = lunar.getDay();
+                    updateLunarDateInfo();
                     console.log("轉換結果：", lunar.toString());
 
                     updateLunarDateInfo();
@@ -319,7 +320,7 @@ const yearlyThemeData = structuredClone(yearlyThemeDataRaw);
             const solarDay = parseInt(document.getElementById('solarDay').value);
             
             const lunarYear = parseInt(document.getElementById('lunarYear').value);
-            const lunarMonth = Math.abs(parseInt(document.getElementById('lunarMonth').value));
+            const lunarMonth = Math.abs(Math.abs(parseInt(document.getElementById('lunarMonth').value)));
             const lunarDay = parseInt(document.getElementById('lunarDay').value);
             
             // 轉換為西元年
@@ -340,7 +341,7 @@ const yearlyThemeData = structuredClone(yearlyThemeDataRaw);
             
             // 計算農曆靈數
             const lunarEssence = calculateEssence(lunarYear);
-            const lunarExternalRaw = lunarYear + lunarMonth + lunarDay;
+            const lunarExternalRaw = lunarYear + Math.abs(lunarMonth) + lunarDay;
             const lunarExternal = calculateSum(lunarExternalRaw);
             const lunarInternal = lunarExternal > 21 ? calculateSum(lunarExternal) : lunarExternal;
             
@@ -385,7 +386,7 @@ const yearlyThemeData = structuredClone(yearlyThemeDataRaw);
             // ===== 計算本月流月 =====
             const currentMonth = currentDate.getMonth() + 1;
             const baseSolarRaw = solarYear + solarMonth + solarDay;
-            const baseLunarRaw = lunarYear + lunarMonth + lunarDay;
+            const baseLunarRaw = lunarYear + Math.abs(lunarMonth) + lunarDay;
             const solarMonthlyRaw = baseSolarRaw + currentYear + currentMonth;
             const lunarMonthlyRaw = baseLunarRaw + currentYear + currentMonth;
             const solarMonthly = calculateFinalSum(solarMonthlyRaw);
