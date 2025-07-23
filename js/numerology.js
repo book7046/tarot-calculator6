@@ -155,7 +155,7 @@ const yearlyThemeData = structuredClone(yearlyThemeDataRaw);
                     const lunar = solar.getLunar();
 
                     document.getElementById('lunarYear').value = lunar.getYear();
-                    document.getElementById('lunarMonth').value = lunar.getMonth();
+                    document.getElementById('lunarMonth').value = Math.abs(lunar.getMonth());
                     document.getElementById('lunarDay').value = lunar.getDay();
                     console.log("轉換結果：", lunar.toString());
 
