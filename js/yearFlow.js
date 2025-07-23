@@ -286,7 +286,7 @@
             const day = parseInt(document.getElementById('lunarDay').value);
             
             if (!isNaN(year) && !isNaN(month) && !isNaN(day)) {
-                document.getElementById('lunarDateDisplay').textContent = `西元 ${year} 年 ${month} 月 ${day} 日`;
+                document.getElementById('lunarDateDisplay').textContent = `西元 ${year} 年 ${Math.abs(month)} 月 ${day} 日`;
                 document.getElementById('lunarDateInfo').style.display = 'block';
             }
         }
