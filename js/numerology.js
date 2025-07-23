@@ -131,11 +131,12 @@ const yearlyThemeData = structuredClone(yearlyThemeDataRaw);
         // 更新農曆日期資訊
         function updateLunarDateInfo() {
             const year = parseInt(document.getElementById('lunarYear').value);
-            const month = parseInt(document.getElementById('lunarMonth').value);
+            const month = Math.abs(parseInt(document.getElementById('lunarMonth').value));
+            document.getElementById('lunarMonth').value = month;
             const day = parseInt(document.getElementById('lunarDay').value);
             
             if (!isNaN(year) && !isNaN(month) && !isNaN(day)) {
-                document.getElementById('lunarDateDisplay').textContent = `西元 ${year} 年 ${month} 月 ${day} 日`;
+                document.getElementById('lunarDateDisplay').textContent = `西元 ${year} 年 ${Math.abs(month)} 月 ${day} 日`;
                 document.getElementById('lunarDateInfo').style.display = 'block';
             }
         }
@@ -155,7 +156,7 @@ const yearlyThemeData = structuredClone(yearlyThemeDataRaw);
                     const lunar = solar.getLunar();
 
                     document.getElementById('lunarYear').value = lunar.getYear();
-                    document.getElementById('lunarMonth').value = lunar.getMonth();
+                    document.getElementById('lunarMonth').value = Math.abs(lunar.getMonth());
                     document.getElementById('lunarDay').value = lunar.getDay();
                     console.log("轉換結果：", lunar.toString());
 
@@ -318,7 +319,7 @@ const yearlyThemeData = structuredClone(yearlyThemeDataRaw);
             const solarDay = parseInt(document.getElementById('solarDay').value);
             
             const lunarYear = parseInt(document.getElementById('lunarYear').value);
-            const lunarMonth = parseInt(document.getElementById('lunarMonth').value);
+            const lunarMonth = Math.abs(parseInt(document.getElementById('lunarMonth').value));
             const lunarDay = parseInt(document.getElementById('lunarDay').value);
             
             // 轉換為西元年
