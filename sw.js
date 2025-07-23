@@ -1,4 +1,4 @@
-const CACHE="numerology-v1";
+const CACHE="numerology-v2";
 const ASSETS=[
  "./",
  "./index.html",
