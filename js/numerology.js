@@ -131,7 +131,7 @@ const yearlyThemeData = structuredClone(yearlyThemeDataRaw);
         // 更新農曆日期資訊
         function updateLunarDateInfo() {
             const year = parseInt(document.getElementById('lunarYear').value);
-            const month = parseInt(document.getElementById('lunarMonth').value);
+            const month = Math.abs(parseInt(document.getElementById("lunarMonth").value));
             const day = parseInt(document.getElementById('lunarDay').value);
             
             if (!isNaN(year) && !isNaN(month) && !isNaN(day)) {
@@ -318,7 +318,7 @@ const yearlyThemeData = structuredClone(yearlyThemeDataRaw);
             const solarDay = parseInt(document.getElementById('solarDay').value);
             
             const lunarYear = parseInt(document.getElementById('lunarYear').value);
-            const lunarMonth = parseInt(document.getElementById('lunarMonth').value);
+            const lunarMonth = Math.abs(parseInt(document.getElementById("lunarMonth").value));
             const lunarDay = parseInt(document.getElementById('lunarDay').value);
             
             // 轉換為西元年
@@ -695,5 +695,4 @@ if (typeof generateLifepathTable === 'function'){
     };
 } else {
     // fallback call on DOMContentLoaded
-    document.addEventListener('DOMContentLoaded', styleLifePathTable);
-}
+    document.addEventListener('DOMContentLoaded', sty
