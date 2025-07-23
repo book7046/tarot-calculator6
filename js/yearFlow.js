@@ -1,7 +1,3 @@
- fallback call on DOMContentLoaded
-    document.addEventListener('DOMContentLoaded', styleLifePathTable);
-}
-
 
         // 塔羅牌名稱
         const tarotCards = [
@@ -474,8 +470,6 @@
             
             const lunarYear = parseInt(document.getElementById('lunarYear').value);
             const lunarMonth = parseInt(document.getElementById('lunarMonth').value);
-    lunarMonth = Math.abs(lunarMonth);
-    lunarMonth = Math.abs(lunarMonth);
             const lunarDay = parseInt(document.getElementById('lunarDay').value);
             
             // 轉換為西元年
@@ -496,7 +490,7 @@
             
             // 計算農曆靈數
             const lunarEssence = calculateEssence(lunarYear);
-            const lunarExternalRaw = lunarYear + Math.abs(lunarMonth) + lunarDay;
+            const lunarExternalRaw = lunarYear + lunarMonth + lunarDay;
             const lunarExternal = calculateSum(lunarExternalRaw);
             const lunarInternal = lunarExternal > 21 ? calculateSum(lunarExternal) : lunarExternal;
             
@@ -529,7 +523,7 @@
             const solarYearly = calculateFinalSum(solarYearlyRaw);
             
             // 計算農曆流年
-            const lunarYearlyRaw = yearToUse + Math.abs(lunarMonth) + lunarDay;
+            const lunarYearlyRaw = yearToUse + lunarMonth + lunarDay;
             const lunarYearly = calculateFinalSum(lunarYearlyRaw);
             
             // 顯示今年流年
@@ -541,7 +535,7 @@
             // ===== 計算本月流月 =====
             const currentMonth = currentDate.getMonth() + 1;
             const baseSolarRaw = solarYear + solarMonth + solarDay;
-            const baseLunarRaw = lunarYear + Math.abs(lunarMonth) + lunarDay;
+            const baseLunarRaw = lunarYear + lunarMonth + lunarDay;
             const solarMonthlyRaw = baseSolarRaw + currentYear + currentMonth;
             const lunarMonthlyRaw = baseLunarRaw + currentYear + currentMonth;
             const solarMonthly = calculateFinalSum(solarMonthlyRaw);
